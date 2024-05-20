@@ -21,11 +21,14 @@ exports.createDataTable = asyncHandler(async (req, res, next) => {
 
 
 exports.getDataTable = asyncHandler(async (req, res, next) => {
-    const result = await db.sequelize.transaction(async (t) => {
-        const tableData = await db.dataTable.findAll();
+   
+
+        const tableData = await db.dataTable.findAll({
+
+        });
         res.status(200).json({
             status: "success",
             data: tableData,
         });
-    });
+   
 })

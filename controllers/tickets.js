@@ -1,7 +1,8 @@
 const asyncHandler = require("express-async-handler");
 const apiError = require("../utils/apiError");
+const { pagination } = require('../helpers/pagination');
 const db = require("../models");
-// const sequelize = require("sequelize");
+
 
 
 
@@ -23,19 +24,29 @@ exports.createTickets = asyncHandler(async (req, res, next) => {
         res.status(200).json({
             status: "success",
             data: ticket,
-          });
-    
-        
+        });  
     })
-    
-
 })
 
 exports.getTickets = asyncHandler(async (req, res, next) => {
-    const tickets = await db.tickets.findAll();
+    const page = req.query.page ? parseInt(req.query.page) : 1;
+        const per_page = req.query.per_page ? parseInt(req.query.per_page) : 3;
+    
+    const { rows, count } = await db.tickets.findAndCountAll({
+        offset: (page - 1) * per_page,
+        limit: per_page,
+       
+    });
+
+    const result = pagination({
+        data: rows,
+        count,
+        page,
+        per_page
+    });
     res.status(200).json({
         status: "success",
-        data: tickets,
+        data: result,
       });
 })
 
