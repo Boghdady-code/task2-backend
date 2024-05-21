@@ -4,8 +4,6 @@ const { pagination } = require('../helpers/pagination');
 const db = require("../models");
 
 
-
-
 exports.createTickets = asyncHandler(async (req, res, next) => {
     const result = await db.sequelize.transaction(async (t) => {
         const {
@@ -28,17 +26,26 @@ exports.createTickets = asyncHandler(async (req, res, next) => {
     })
 })
 
+
+
 exports.getTickets = asyncHandler(async (req, res, next) => {
     const page = req.query.page ? parseInt(req.query.page) : 1;
-        const per_page = req.query.per_page ? parseInt(req.query.per_page) : 3;
+    const per_page = req.query.per_page ? parseInt(req.query.per_page) : 3;
+    const {order} = req.query;
+    const orderQuery = order ? [order, 'DESC'] : '';
+
+
+
     
     const { rows, count } = await db.tickets.findAndCountAll({
         offset: (page - 1) * per_page,
         limit: per_page,
         attributes: { exclude: ['createdAt', 'updatedAt'] },
-       
+        order: [orderQuery],
+        
+        
+        
     });
-
     const result = pagination({
         data: rows,
         count,
@@ -48,7 +55,7 @@ exports.getTickets = asyncHandler(async (req, res, next) => {
     res.status(200).json({
         status: "success",
         data: result,
-      });
+    });
 })
 
 

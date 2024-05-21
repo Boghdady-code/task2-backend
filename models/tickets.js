@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty:{
           args: true,
-          msg: "ticketNo is required"
+          msg: "ticket no is required"
         }
       }
     },
