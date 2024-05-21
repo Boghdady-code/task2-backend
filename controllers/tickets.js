@@ -35,6 +35,7 @@ exports.getTickets = asyncHandler(async (req, res, next) => {
     const { rows, count } = await db.tickets.findAndCountAll({
         offset: (page - 1) * per_page,
         limit: per_page,
+        attributes: { exclude: ['createdAt', 'updatedAt'] },
        
     });
 
