@@ -14,10 +14,11 @@ exports.createTickets = asyncHandler(async (req, res, next) => {
             date,
             time,
             done,
+            actions
         } = req.body;
-        if (!ticketNo || !title || !description || !status || !date || !time || !done) {
-            throw new apiError("All fields are required", 400);
-        }
+        // if (!ticketNo || !title || !description || !status || !date || !time || !done || !actions) {
+        //     throw new apiError("All fields are required", 400);
+        // }
         const ticket = await db.tickets.create(req.body, { transaction: t });
         res.status(200).json({
             status: "success",
@@ -32,7 +33,7 @@ exports.getTickets = asyncHandler(async (req, res, next) => {
     const page = req.query.page ? parseInt(req.query.page) : 1;
     const per_page = req.query.per_page ? parseInt(req.query.per_page) : 3;
     const {order} = req.query;
-    const orderQuery = order ? [order, 'DESC'] : '';
+    const orderQuery = order ? [order, 'DESC'] : ['date', 'DESC'];
 
 
 

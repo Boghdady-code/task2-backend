@@ -22,7 +22,7 @@ app.all("*", (req, res, next) => {
 
 app.use(globalError);
 
-db.sequelize.sync().then(() => {
+db.sequelize.sync({ force: false }).then(() => {
         console.log("DB connected");
     })
 

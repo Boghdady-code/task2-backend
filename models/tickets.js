@@ -76,6 +76,15 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       defaultValue: false
+    },
+    actions : {
+      type: DataTypes.JSON,
+      validate: {
+        notEmpty:{
+          args: false,
+        }
+      },
+      defaultValue: []
     }
   }, {
     sequelize,
