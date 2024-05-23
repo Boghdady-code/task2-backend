@@ -11,6 +11,7 @@ exports.createTicketValidation =  [
     body("date").notEmpty().withMessage("date is required"),
     body("time").notEmpty().withMessage("time is required"),
     body("done").optional().isBoolean().withMessage("Must be a boolean"),
+    body("actions").notEmpty().withMessage("actions is required").isArray().withMessage("Must be an array"),
     validatorMiddleware
 ];
 

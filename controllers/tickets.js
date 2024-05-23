@@ -13,12 +13,11 @@ exports.createTickets = asyncHandler(async (req, res, next) => {
             status,
             date,
             time,
-            done,
             actions
         } = req.body;
-        // if (!ticketNo || !title || !description || !status || !date || !time || !done || !actions) {
-        //     throw new apiError("All fields are required", 400);
-        // }
+        if (!ticketNo || !title || !description || !status || !date || !time || !actions) {
+            next(new apiError("All fields are required", 400));
+        }
         const ticket = await db.tickets.create(req.body, { transaction: t });
         res.status(200).json({
             status: "success",

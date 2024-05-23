@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": null,
-    "database": "table-grid",
+    "password": "01124685810Aa@",
+    "database": "grid_table",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
